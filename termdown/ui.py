@@ -44,7 +44,6 @@ class Ui:
         """
         Draws text in the given color. Duh.
         """
-
         title = self._args.title or ""
         end = end or ""
 
@@ -88,7 +87,11 @@ class Ui:
                 continue
             else:
                 break
+        
+        controls = "[Space] Pause/Resume  [R] Reset  [L] Lap  [Q] Quit"
 
+        start_x = max(0, (x - len(controls)) // 2)
+        self.stdscr.addstr(y - 1, start_x, controls[:x-1])
         self.stdscr.refresh()
 
     def set_window_title(self, text):
@@ -101,7 +104,7 @@ class Ui:
     def start_input_thread(self):
         Thread(
             target=self._input_thread_body,
-            daemon=True,
+            daemon=True, 
         ).start()
 
     def _input_thread_body(self):
